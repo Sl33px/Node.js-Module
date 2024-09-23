@@ -1,12 +1,13 @@
-const express = require('express');
-const {response} = require("express");
+// @ts-ignore
+import express from 'express';
+
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 const PORT = 5000
 
-const bobs = [
+const bobs: ReadableStream<Uint8Array> | null = [
     {
         name: 'bob1',
         age: 20,
@@ -29,37 +30,40 @@ const bobs = [
     }
 ]
 
-app.get('/bobs', (req, res) => {
+app.get('/bobs', (req: Request, res: Response) => {
     // request to db to get info
+    // @ts-ignore
     res.json(bobs)
 })
 
-app.post('/bobs', (req, res) => {
+app.post('/bobs', (req: Request, res: Response) => {
     const bob = req.body;
+    // @ts-ignore
     bobs.push(bob);
 
+    // @ts-ignore
     res.status(201).json({message: 'Bob added successfully'});
     console.log(req.body)
 })
 
-app.put('/bobs/:id', (req, res) => {
+app.put('/bobs/:id', (req: Request, res: Response) => {
     console.log(req.params)
     const { id } = req.params;
-    const updatedbobInfo = req.body;
+    bobs[+id] = req.body;
 
-    bobs[+id] = updatedbobInfo;
-
+    // @ts-ignore
     res.status(200).json({
         message: 'Bob updated successfully',
         date: bobs[id]
     });
 })
 
-app.delete('/bobs/:id', (req, res) => {
+app.delete('/bobs/:id', (req: Request, res: Response) => {
     const { id } = req.params;
 
     bobs.splice(+id, 1);
 
+    // @ts-ignore
     res.status(200).json({
         message: 'Bob deleted successfully'
     });
