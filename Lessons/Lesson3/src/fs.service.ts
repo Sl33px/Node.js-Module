@@ -13,7 +13,7 @@ const read = async (): Promise<IUser[]> => {
   }
 };
 
-const write = async (users: IUser[]): Promise<void> => {
+        const write = async (users: IUser[]): Promise<void> => {
   try {
     const pathToFile = path.join(process.cwd(), "db.json");
     await fs.writeFile(pathToFile, JSON.stringify(users));

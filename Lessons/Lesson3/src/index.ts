@@ -5,21 +5,21 @@ import { read, write } from "./fs.service";
 const app = express();
 
 app.use(express.json());
-              app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: true }));
 
 app.get("/users", async (req: Request, res: Response): Promise<void> => {
   try {
     const users = await read();
     res.send(users); // Не возвращаем результат res.send(), просто вызываем его
   } catch (e) {
-               res.status(500).send(e instanceof Error ? e.message : "Unknown error");
+    res.status(500).send(e instanceof Error ? e.message : "Unknown error");
   }
 });
 
 app.post("/users", async (req: Request, res: Response): Promise<void> => {
   try {
     const { name, email, password } = req.body;
-              if (!name || name.length < 3) {
+    if (!name || name.length < 3) {
       res
         .status(400)
         .send("Name is required and should be at least 3 characters long");
