@@ -1,7 +1,7 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 
-import { IUser } from "./interfaces/users.interface";
+import { IUser } from "../interfaces/users.interface";
 
 const read = async (): Promise<IUser[]> => {
   try {
@@ -13,7 +13,7 @@ const read = async (): Promise<IUser[]> => {
   }
 };
 
-        const write = async (users: IUser[]): Promise<void> => {
+const write = async (users: IUser[]): Promise<void> => {
   try {
     const pathToFile = path.join(process.cwd(), "db.json");
     await fs.writeFile(pathToFile, JSON.stringify(users));
